@@ -1,0 +1,91 @@
+get:
+  tags:
+    - pet.yaml
+  summary: Find pet.yaml by ID
+  description: Returns a single pet.yaml
+  operationId: getPetById
+  parameters:
+    - name: petId
+      in: path
+      description: ID of pet.yaml to return
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '200':
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Pet.yaml'
+        application/xml:
+          schema:
+            $ref: '../components/schemas/Pet.yaml'
+    '400':
+      description: Invalid ID supplied
+    '404':
+      description: Pet not found
+  security:
+    - api_key: []
+    - petstore_auth:
+        - write:pets
+        - read:pets
+post:
+  tags:
+    - pet.yaml
+  summary: Updates a pet.yaml in the store with form data
+  description: ''
+  operationId: updatePetWithForm
+  parameters:
+    - name: petId
+      in: path
+      description: ID of pet.yaml that needs to be updated
+      required: true
+      schema:
+        type: integer
+        format: int64
+    - name: name
+      in: query
+      description: Name of pet.yaml that needs to be updated
+      schema:
+        type: string
+    - name: status
+      in: query
+      description: Status of pet.yaml that needs to be updated
+      schema:
+        type: string
+  responses:
+    '405':
+      description: Invalid input
+  security:
+    - petstore_auth:
+        - write:pets
+        - read:pets
+delete:
+  tags:
+    - pet.yaml
+  summary: Deletes a pet.yaml
+  description: delete a pet.yaml
+  operationId: deletePet
+  parameters:
+    - name: api_key
+      in: header
+      description: ''
+      required: false
+      schema:
+        type: string
+    - name: petId
+      in: path
+      description: Pet id to delete
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '400':
+      description: Invalid pet.yaml value
+  security:
+    - petstore_auth:
+        - write:pets
+        - read:pets
